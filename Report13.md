@@ -1,0 +1,42 @@
+# 第13回　Webエンジニアリング演習　レポート
+## 学籍番号
+4723229
+
+## 実装したコード
+
+```
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+
+interface Todo {
+    id: number
+    title: string
+    completed: boolean
+    }
+
+export const useTodoStore = defineStore('todos', () => {
+    let serialId = 4
+    
+    const todos = ref<Todo[]>([
+        { id: 1, title: 'Buy groceries', completed: false },
+        { id: 2, title: 'Write report', completed: true },
+        { id: 3, title: 'Call Alice', completed: false },
+    ])
+
+    const addTodo = (title: string) => {
+        const newTodo: Todo = {
+            id: serialId++,
+            title: title,
+            completed: false,
+        }
+        todos.value.push(newTodo)
+    }
+
+    const deleteTodo = (id: number) => {
+        todos.value = todos.value.filter(todo => todo.id !== id)
+
+    }
+
+    return { todos, addTodo, deleteTodo }
+})
+```
